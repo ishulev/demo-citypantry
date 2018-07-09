@@ -4,17 +4,17 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.router';
-import { HomepageComponent } from './homepage/homepage.component';
+import { HomepageModule } from './homepage/homepage.module';
 import { OrderListComponent } from './order-list/order-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomepageComponent,
     OrderListComponent
   ],
   imports: [
+    HomepageModule,
     BrowserModule,
     AppRouterModule
   ],
