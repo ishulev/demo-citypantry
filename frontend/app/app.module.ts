@@ -1,20 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.router';
+import { OrderListModule } from './order-list/order-list.module';
 import { HomepageModule } from './homepage/homepage.module';
-import { OrderListComponent } from './order-list/order-list.component';
-
 
 @NgModule({
   declarations: [
-    AppComponent,
-    OrderListComponent
+    AppComponent
   ],
   imports: [
     HomepageModule,
+    OrderListModule,
     BrowserModule,
     AppRouterModule
   ],

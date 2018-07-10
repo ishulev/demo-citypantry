@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomepageComponent } from './homepage/homepage.component';
-import { OrderListComponent } from './order-list/order-list.component';
+// import { HomepageComponent } from './homepage/homepage.component';
+// import { OrderListComponent } from './order-list/order-list.component';
 
 const appRoutes: Routes = [
   {
     path: 'orders',
-    component: OrderListComponent
+    loadChildren: 'app/order-list/order-list.module#OrderListModule'
   },
   {
     path: '',
-    component: HomepageComponent
+    loadChildren: 'app/homepage/homepage.module#HomepageModule'
   },
   {
     path: '**',
-    component: HomepageComponent
+    loadChildren: 'app/homepage/homepage.module#HomepageModule'
   },
 ];
 
