@@ -7,8 +7,9 @@ import {
   RouterStateSerializer,
 } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
-import { reducers, metaReducers } from './shared/store/reducers/index';
+import { reducers, metaReducers } from './shared/store/reducers';
 import { CustomRouterStateSerializer } from './shared/utils';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.router';
@@ -56,6 +57,14 @@ import { HomepageModule } from './homepage/homepage.module';
       */
       stateKey: 'router',
     }),
+    /**
+     * EffectsModule.forRoot() is imported once in the root module and
+     * sets up the effects class to be initialized immediately when the
+     * application starts.
+     *
+     * See: https://github.com/ngrx/platform/blob/master/docs/effects/api.md#forroot
+     */
+    EffectsModule.forRoot([])
   ],
   providers: [
     /**
