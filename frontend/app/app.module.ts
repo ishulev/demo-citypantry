@@ -1,4 +1,3 @@
-import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -9,7 +8,7 @@ import {
 } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { reducers } from './shared/store/reducers/index';
+import { reducers, metaReducers } from './shared/store/reducers/index';
 import { CustomRouterStateSerializer } from './shared/utils';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.router';
@@ -32,7 +31,7 @@ import { HomepageModule } from './homepage/homepage.module';
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers, { metaReducers }),
     /**
      * Store devtools instrument the store retaining past versions of state
      * and recalculating new states. This enables powerful time-travel
