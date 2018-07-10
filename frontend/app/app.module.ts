@@ -44,7 +44,7 @@ import { HomepageModule } from './homepage/homepage.module';
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
     StoreDevtoolsModule.instrument({
-      name: 'NgRx Book Store DevTools',
+      name: 'City Pantry Store DevTools',
       // logOnly: environment.production,
     }),
      /**
