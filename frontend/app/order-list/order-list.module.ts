@@ -6,10 +6,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { OrdersEffects } from './store/effects/orders.effects';
 import { OrderListRoutingModule } from './router/order-list-routing.module';
 import { OrderListComponent } from './components/list/order-list.component';
-import { PageComponent } from './components/page/page.component';
+import { PageComponent } from './components/list/page/page.component';
 
 @NgModule({
-  declarations: [OrderListComponent, PageComponent, PageComponent],
+  declarations: [OrderListComponent, PageComponent],
   imports: [
     HttpClientModule,
     CommonModule,

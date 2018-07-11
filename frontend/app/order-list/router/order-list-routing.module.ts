@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PageComponent } from './../components/page/page.component';
+import { PageComponent } from '../components/list/page/page.component';
 import { PreloadResolver } from './preload-resolver';
 import { OrderListComponent } from '../components/list/order-list.component';
 
