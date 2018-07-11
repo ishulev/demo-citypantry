@@ -1,16 +1,28 @@
-import { PreloadResolver } from './preload-resolver';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { PageComponent } from './../components/page/page.component';
+import { PreloadResolver } from './preload-resolver';
 import { OrderListComponent } from '../components/list/order-list.component';
 
 const routes: Routes = [
   {
     path: '',
     component: OrderListComponent,
-    resolve: {
-      data: PreloadResolver
-    }
+    children: [
+      {
+        path: 'page/:number',
+        resolve: {
+          data: PreloadResolver
+        },
+        component: PageComponent
+      },
+      {
+        path: '',
+        redirectTo: 'page/1',
+        pathMatch: 'prefix'
+      }
+    ]
   }
 ];
 
