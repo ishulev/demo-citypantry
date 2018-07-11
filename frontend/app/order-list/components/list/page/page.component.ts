@@ -9,10 +9,11 @@ import { ActivatedRoute } from '@angular/router';
 export class PageComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute) {
-    console.log(this._route.snapshot.data);
+    // console.log(this._route.snapshot.data);
   }
 
   ngOnInit() {
+    this._route.snapshot.data.subscribe(data => console.log(data));
   }
 
 }

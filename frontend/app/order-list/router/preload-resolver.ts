@@ -23,6 +23,7 @@ export class PreloadResolver implements Resolve<Observable<OrderState>>, OnDestr
   private _routeParam = null;
 
   resolve(route: ActivatedRouteSnapshot): Observable<OrderState> {
+    console.log('RESOLVER!');
     this._routeParam = route.paramMap.get('number');
     this._store.dispatch(new OrdersModelLoadAction(this._routeParam));
     return this._actions.pipe(

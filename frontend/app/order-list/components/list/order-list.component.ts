@@ -1,6 +1,8 @@
 import { switchMap } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-order-list',
@@ -11,19 +13,32 @@ export class OrderListComponent implements OnInit {
   constructor(private _activeRoute: ActivatedRoute, private _router: Router) {
   }
 
-  public currentPage: String = '0';
+  private _paramsSubs= new Observable<ParamMap>();
+  public currentPage: number = null;
+
+  private navigateToPage() {
+    this._router.navigate(['/orders/page', '' + this.currentPage]);
+  }
 
   public changeRouteMinus() {
-    this._router.navigate(['/page', { number: '5'}]);
+    this.currentPage--;
+    this.navigateToPage();
+  }
+
+  public changeRoutePlus() {
+    this.currentPage++;
+    this.navigateToPage();
   }
 
   ngOnInit() {
-    this._activeRoute.paramMap.pipe(
+    this.currentPage = this._activeRoute.children[0].snapshot.params.number;
+    this._paramsSubs = this._activeRoute.children[0].paramMap.pipe(
       switchMap((params: ParamMap) => {
-        console.log(params.get('number'));
-        return this.currentPage = params.get('number');
-      }),
-    );
+        this.currentPage = +params.get('number');
+        console.log(this.currentPage);
+        return Observable.of(params);
+      })
+    )
   }
 
 }
