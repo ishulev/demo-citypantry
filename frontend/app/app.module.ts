@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { StoreModule } from '@ngrx/store';
 import {
   StoreRouterConnectingModule,
   RouterStateSerializer,
 } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
-import { reducers, metaReducers } from './shared/store/reducers/index';
+import { reducers, metaReducers } from './shared/store/reducers';
 import { CustomRouterStateSerializer } from './shared/utils';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.router';
@@ -56,6 +56,7 @@ import { HomepageModule } from './homepage/homepage.module';
       */
       stateKey: 'router',
     }),
+    EffectsModule.forRoot([])
   ],
   providers: [
     /**
