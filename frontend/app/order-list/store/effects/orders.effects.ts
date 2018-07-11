@@ -13,8 +13,8 @@ export class OrdersEffects {
   @Effect()
   getData: Observable<Action> = this._actions.pipe(
     ofType(OrdersModelLoadAction.TYPE),
-    mergeMap(action =>
-      this._http.get('http://localhost:4300/orders').pipe(
+    mergeMap((action: OrdersModelLoadAction) =>
+      this._http.get(`http://localhost:4300/orders?page=${action.payload}`).pipe(
         // If successful, dispatch success action with result
         map(data => (new OrdersModelLoadedAction(data as OrderState))),
         // If request fails, dispatch failed action

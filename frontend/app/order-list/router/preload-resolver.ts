@@ -17,13 +17,14 @@ export class PreloadResolver implements Resolve<Observable<Boolean>>, OnDestroy 
     private _store: Store<OrderState>,
     private _actions: Actions
   ) {
-    this._store.dispatch(new OrdersModelLoadAction);
   }
 
   private _destroyed = new Subject<boolean>();
+  private _routeParam = null;
 
   resolve(route: ActivatedRouteSnapshot): Observable<Boolean> {
-    console.log(route.paramMap.get('number'));
+    this._routeParam = route.paramMap.get('number');
+    this._store.dispatch(new OrdersModelLoadAction(this._routeParam));
     return this._actions.pipe(
       ofType(OrdersModelLoadedAction.TYPE),
       take(1),

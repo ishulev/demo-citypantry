@@ -1,10 +1,12 @@
 import { Action } from '@ngrx/store';
 
-import { OrderState } from './../models/index';
+import { OrderState } from '../models';
 
 export class OrdersModelLoadAction implements Action {
   public static readonly TYPE = 'LOAD_DATA';
   public readonly type = OrdersModelLoadAction.TYPE;
+
+  constructor(public readonly payload: String) {}
 }
 
 export class OrdersModelLoadedAction implements Action {
