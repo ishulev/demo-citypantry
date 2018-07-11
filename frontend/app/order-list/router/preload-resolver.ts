@@ -12,7 +12,7 @@ import { OrderState } from './../store/models';
 import { take, takeUntil, switchMap } from 'rxjs/operators';
 
 @Injectable()
-export class PreloadResolver implements Resolve<Observable<Boolean>>, OnDestroy {
+export class PreloadResolver implements Resolve<Observable<OrderState>>, OnDestroy {
   constructor(
     private _store: Store<OrderState>,
     private _actions: Actions
@@ -22,14 +22,14 @@ export class PreloadResolver implements Resolve<Observable<Boolean>>, OnDestroy 
   private _destroyed = new Subject<boolean>();
   private _routeParam = null;
 
-  resolve(route: ActivatedRouteSnapshot): Observable<Boolean> {
+  resolve(route: ActivatedRouteSnapshot): Observable<OrderState> {
     this._routeParam = route.paramMap.get('number');
     this._store.dispatch(new OrdersModelLoadAction(this._routeParam));
     return this._actions.pipe(
       ofType(OrdersModelLoadedAction.TYPE),
       take(1),
       takeUntil(this._destroyed),
-      switchMap(() => Observable.of(true))
+      switchMap((action: OrdersModelLoadedAction) => Observable.of(action.payload))
     );
   }
 
