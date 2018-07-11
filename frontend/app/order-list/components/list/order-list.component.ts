@@ -9,36 +9,30 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.scss']
 })
-export class OrderListComponent implements OnInit {
+export class OrderListComponent implements OnInit, OnDestroy {
   constructor(private _activeRoute: ActivatedRoute, private _router: Router) {
   }
 
-  private _paramsSubs= new Observable<ParamMap>();
+  private _paramsSub: any;
   public currentPage: number = null;
 
-  private navigateToPage() {
-    this._router.navigate(['/orders/page', '' + this.currentPage]);
+  private navigateToPage(nextPage) {
+    this._router.navigate(['/orders/page', '' + nextPage]);
   }
 
   public changeRouteMinus() {
-    this.currentPage--;
-    this.navigateToPage();
+    this.navigateToPage(this.currentPage - 1);
   }
 
   public changeRoutePlus() {
-    this.currentPage++;
-    this.navigateToPage();
+    this.navigateToPage(this.currentPage + 1);
   }
 
   ngOnInit() {
-    this.currentPage = this._activeRoute.children[0].snapshot.params.number;
-    this._paramsSubs = this._activeRoute.children[0].paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.currentPage = +params.get('number');
-        console.log(this.currentPage);
-        return Observable.of(params);
-      })
-    )
+    this._paramsSub = this._activeRoute.children[0].paramMap.subscribe(params => this.currentPage = +params.get('number'));
   }
 
+  ngOnDestroy() {
+    this._paramsSub.unsubscribe();
+  }
 }

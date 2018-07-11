@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,14 +6,17 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss']
 })
-export class PageComponent implements OnInit {
+export class PageComponent implements OnInit, OnDestroy {
 
   constructor(private _route: ActivatedRoute) {
-    // console.log(this._route.snapshot.data);
   }
+  private _dataSub: any; 
 
   ngOnInit() {
-    this._route.snapshot.data.subscribe(data => console.log(data));
+    this._dataSub = this._route.data.subscribe(data => console.log(data));
   }
 
+  ngOnDestroy() {
+    this._dataSub.unsubscribe();
+  }
 }

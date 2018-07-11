@@ -10,6 +10,7 @@ import { Subject } from 'rxjs/Subject';
 import { OrdersModelLoadAction, OrdersModelLoadedAction } from './../store/actions';
 import { OrderState } from './../store/models';
 import { take, takeUntil, switchMap } from 'rxjs/operators';
+import { delay } from 'rxjs/operator/delay';
 
 @Injectable()
 export class PreloadResolver implements Resolve<Observable<OrderState>>, OnDestroy {
@@ -30,7 +31,7 @@ export class PreloadResolver implements Resolve<Observable<OrderState>>, OnDestr
       ofType(OrdersModelLoadedAction.TYPE),
       take(1),
       takeUntil(this._destroyed),
-      switchMap((action: OrdersModelLoadedAction) => Observable.of(action.payload))
+      switchMap((action: OrdersModelLoadedAction) => Observable.of(action.payload).delay(1000)),
     );
   }
 
