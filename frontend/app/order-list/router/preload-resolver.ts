@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Actions, ofType } from '@ngrx/effects';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
-import { Store, Action } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 
 import { OrdersModelLoadAction, OrdersModelLoadedAction } from './../store/actions';
@@ -22,8 +22,8 @@ export class PreloadResolver implements Resolve<Observable<Boolean>>, OnDestroy 
 
   private _destroyed = new Subject<boolean>();
 
-  resolve(): Observable<Boolean> {
-    console.log('render!');
+  resolve(route: ActivatedRouteSnapshot): Observable<Boolean> {
+    console.log(route.paramMap.get('number'));
     return this._actions.pipe(
       ofType(OrdersModelLoadedAction.TYPE),
       take(1),
