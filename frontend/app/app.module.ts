@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { StoreModule } from '@ngrx/store';
 import {
   StoreRouterConnectingModule,
@@ -57,13 +56,6 @@ import { HomepageModule } from './homepage/homepage.module';
       */
       stateKey: 'router',
     }),
-    /**
-     * EffectsModule.forRoot() is imported once in the root module and
-     * sets up the effects class to be initialized immediately when the
-     * application starts.
-     *
-     * See: https://github.com/ngrx/platform/blob/master/docs/effects/api.md#forroot
-     */
     EffectsModule.forRoot([])
   ],
   providers: [
