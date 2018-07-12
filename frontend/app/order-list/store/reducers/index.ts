@@ -1,4 +1,4 @@
-import { ResponseFromServer } from '../models';
+import { ResponseFromServer, Order } from '../models';
 import { ServerResponseReceivedAction, GetOrdersFromServerAction, ServerActionsUnion } from '../actions';
 
 export interface ResponseFromServerState extends ResponseFromServer {
@@ -14,13 +14,22 @@ const initialState: ResponseFromServerState = {
   loading: true
 };
 
-
+const demoOrder = new Order();
 
 export function reducer(state = initialState, action: ServerActionsUnion): ResponseFromServerState {
   switch (action.type) {
     case ServerResponseReceivedAction.TYPE: {
-      const payload = action.payload;
-      return Object.assign({}, {...state, loading: false}, payload);
+      const rawPayload = action.payload;
+      const indexesNotInState = [];
+      const filteredPayload = {
+        ...rawPayload,
+        items: rawPayload.items.map(item => {
+          const newItem = {};
+          Object.keys(demoOrder).forEach(key => newItem[key] = item[key]);
+          return newItem;
+        })
+      };
+      return Object.assign({}, {...state, loading: false}, filteredPayload);
     }
 
     case GetOrdersFromServerAction.TYPE: {
