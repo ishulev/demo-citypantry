@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+
+import { Order } from './../../../store/models';
+import * as fromShared from './../../../../shared/store/reducers';
 
 @Component({
   selector: 'app-page',
@@ -8,12 +11,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PageComponent implements OnInit, OnDestroy {
 
-  constructor(private _route: ActivatedRoute) {
+  constructor(private _store: Store<fromShared.State>) {
   }
-  private _dataSub: any; 
+  private _dataSub: any;
+  public orders: Order[];
 
   ngOnInit() {
-    this._dataSub = this._route.data.subscribe(data => console.log(data));
+    this._dataSub = this._store.pipe(select(fromShared.getOrders)).subscribe(orders => {
+      console.log(orders);
+      this.orders = orders;
+    });
   }
 
   ngOnDestroy() {
