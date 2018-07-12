@@ -1,8 +1,9 @@
-import { switchMap } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+
+import * as fromShared from './../../../shared/store/reducers';
 
 @Component({
   selector: 'app-order-list',
@@ -10,29 +11,50 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements OnInit, OnDestroy {
-  constructor(private _activeRoute: ActivatedRoute, private _router: Router) {
+  constructor(private _router: Router, private _store: Store<fromShared.State>) {
   }
 
-  private _paramsSub: any;
-  public currentPage: number = null;
+  private _pageSub: any;
+  private _loadingSub: any;
+  private _totalPagesSub: any;
+  public currentPage: number;
+  public lastPage: number;
 
   private navigateToPage(nextPage) {
     this._router.navigate(['/orders/page', '' + nextPage]);
   }
 
   public changeRouteMinus() {
+    if (this.currentPage === 1) {
+      return;
+    }
     this.navigateToPage(this.currentPage - 1);
   }
 
   public changeRoutePlus() {
+    if (this.currentPage === this.lastPage) {
+      return;
+    }
     this.navigateToPage(this.currentPage + 1);
   }
 
+  public changeRouteLastPage() {
+    this.navigateToPage(this.lastPage);
+  }
+
+  public changeRouteFirstPage() {
+    this.navigateToPage(1);
+  }
+
   ngOnInit() {
-    this._paramsSub = this._activeRoute.children[0].paramMap.subscribe(params => this.currentPage = +params.get('number'));
+    this._pageSub = this._store.pipe(select(fromShared.getPage)).subscribe(page => this.currentPage = page);
+    this._loadingSub = this._store.pipe(select(fromShared.isLoading)).subscribe(isLoading => console.log(isLoading));
+    this._totalPagesSub = this._store.pipe(select(fromShared.getTotalPages)).subscribe(totalPages => this.lastPage = totalPages);
   }
 
   ngOnDestroy() {
-    this._paramsSub.unsubscribe();
+    this._pageSub.unsubscribe();
+    this._loadingSub.unsubscribe();
+    this._totalPagesSub.unsubscribe();
   }
 }
