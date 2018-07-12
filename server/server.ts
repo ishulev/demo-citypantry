@@ -24,13 +24,13 @@ app.get('/orders', (req, res) => {
 
   const items = orders.slice(100 * (page - 1), 100 * page);
 
-  res.send({
+  setTimeout(() => res.send({
     page: page,
     pageSize: 100,
     total: orders.length,
     count: items.length,
     items
-  });
+  }), 2000);
 });
 
 app.listen(4300, () => console.log('Server active on port 4300!'));

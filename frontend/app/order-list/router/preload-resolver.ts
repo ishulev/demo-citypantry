@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Resolve, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Actions, ofType } from '@ngrx/effects';
 import 'rxjs/add/observable/of';
@@ -7,15 +7,15 @@ import 'rxjs/add/operator/delay';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 
-import { OrdersModelLoadAction, OrdersModelLoadedAction } from './../store/actions';
-import { OrderState } from './../store/models';
+import { Order } from '../store/models';
+import { GetOrdersFromServerAction, ServerResponseReceivedAction } from '../store/actions';
 import { take, takeUntil, switchMap } from 'rxjs/operators';
-import { delay } from 'rxjs/operator/delay';
+import { ResponseFromServer } from '../store/models';
 
 @Injectable()
-export class PreloadResolver implements Resolve<Observable<OrderState>>, OnDestroy {
+export class PreloadResolver implements Resolve<Observable<ResponseFromServer>>, OnDestroy {
   constructor(
-    private _store: Store<OrderState>,
+    private _store: Store<ResponseFromServer>,
     private _actions: Actions
   ) {
   }
@@ -23,15 +23,15 @@ export class PreloadResolver implements Resolve<Observable<OrderState>>, OnDestr
   private _destroyed = new Subject<boolean>();
   private _routeParam = null;
 
-  resolve(route: ActivatedRouteSnapshot): Observable<OrderState> {
+  resolve(route: ActivatedRouteSnapshot): Observable<ResponseFromServer> {
     console.log('RESOLVER!');
     this._routeParam = route.paramMap.get('number');
-    this._store.dispatch(new OrdersModelLoadAction(this._routeParam));
+    this._store.dispatch(new GetOrdersFromServerAction(this._routeParam));
     return this._actions.pipe(
-      ofType(OrdersModelLoadedAction.TYPE),
+      ofType(ServerResponseReceivedAction.TYPE),
       take(1),
       takeUntil(this._destroyed),
-      switchMap((action: OrdersModelLoadedAction) => Observable.of(action.payload).delay(1000)),
+      switchMap((action: ServerResponseReceivedAction) => Observable.of(action.payload)),
     );
   }
 
