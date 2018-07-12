@@ -39,3 +39,5 @@ export function reducer(state = initialState, action: ServerActionsUnion): Respo
 
 export const getOrders = (state: ResponseFromServerState) => state.items;
 export const getLoading = (state: ResponseFromServerState) => state.loading;
+export const getCurrentPage = (state: ResponseFromServerState) => state.page;
+export const getTotalPages = (state: ResponseFromServerState) => Math.ceil(state.total / state.count);

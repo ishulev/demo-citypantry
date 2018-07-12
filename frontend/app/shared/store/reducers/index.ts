@@ -77,3 +77,13 @@ export const getOrders = createSelector(
   getServerState,
   orders.getOrders
 );
+
+export const getPage = createSelector(
+  getServerState,
+  orders.getCurrentPage
+);
+
+export const getTotalPages = createSelector(
+  getServerState,
+  orders.getTotalPages
+);
