@@ -13,7 +13,7 @@ const routes: Routes = [
       {
         path: 'page/:number',
         resolve: {
-          data: PreloadResolver
+          PreloadResolver
         },
         component: PageComponent
       },

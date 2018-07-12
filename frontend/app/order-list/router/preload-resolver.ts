@@ -7,13 +7,13 @@ import 'rxjs/add/operator/delay';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 
-import { Order } from '../store/models';
-import { GetOrdersFromServerAction, ServerResponseReceivedAction } from '../store/actions';
 import { take, takeUntil, switchMap } from 'rxjs/operators';
+
+import { GetOrdersFromServerAction, ServerResponseReceivedAction } from '../store/actions';
 import { ResponseFromServer } from '../store/models';
 
 @Injectable()
-export class PreloadResolver implements Resolve<Observable<ResponseFromServer>>, OnDestroy {
+export class PreloadResolver implements Resolve<Observable<Boolean>>, OnDestroy {
   constructor(
     private _store: Store<ResponseFromServer>,
     private _actions: Actions
@@ -23,7 +23,7 @@ export class PreloadResolver implements Resolve<Observable<ResponseFromServer>>,
   private _destroyed = new Subject<boolean>();
   private _routeParam = null;
 
-  resolve(route: ActivatedRouteSnapshot): Observable<ResponseFromServer> {
+  resolve(route: ActivatedRouteSnapshot): Observable<Boolean> {
     console.log('RESOLVER!');
     this._routeParam = route.paramMap.get('number');
     this._store.dispatch(new GetOrdersFromServerAction(this._routeParam));
@@ -31,7 +31,7 @@ export class PreloadResolver implements Resolve<Observable<ResponseFromServer>>,
       ofType(ServerResponseReceivedAction.TYPE),
       take(1),
       takeUntil(this._destroyed),
-      switchMap((action: ServerResponseReceivedAction) => Observable.of(action.payload)),
+      switchMap(() => Observable.of(true)),
     );
   }
 
