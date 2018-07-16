@@ -15,12 +15,14 @@ export class PageComponent implements OnInit, OnDestroy {
   }
   private _dataSub: any;
   public orders: Order[];
+  public indexes: string[];
 
   ngOnInit() {
     this._dataSub = this._store.pipe(select(fromShared.getOrders)).subscribe(orders => {
       console.log(orders);
       this.orders = orders;
     });
+    this.indexes = Object.keys(this.orders[0]);
   }
 
   ngOnDestroy() {
