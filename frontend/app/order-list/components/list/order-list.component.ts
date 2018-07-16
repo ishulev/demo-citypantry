@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 
 import * as fromShared from './../../../shared/store/reducers';
 import { slideInDownAnimation } from '../../../app.animations';
+import { GetOrdersFromServerAction } from '../../store/actions';
 
 @Component({
   selector: 'app-order-list',
@@ -15,7 +16,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
   @HostBinding('@routeAnimation') routeAnimation = true;
   @HostBinding('style.display')   display = 'block';
   @HostBinding('style.position')  position = 'absolute';
-  constructor(private _router: Router, private _store: Store<fromShared.State>) {
+  constructor(private _router: Router, private _store: Store<fromShared.State>, private _currentRoute: ActivatedRoute) {
   }
 
   private _pageSub: any;
@@ -23,9 +24,22 @@ export class OrderListComponent implements OnInit, OnDestroy {
   private _totalPagesSub: any;
   public currentPage: number;
   public lastPage: number;
+  public closestPages: number[];
 
   private navigateToPage(nextPage) {
     this._router.navigate(['/orders/page', '' + nextPage]);
+    this._store.dispatch(new GetOrdersFromServerAction(nextPage));
+  }
+  private setClosestPages(currentPage) {
+    if(currentPage < 4) {
+      this.closestPages = [1, 2, 3, 4, 5];
+    }
+    else if (currentPage > this.lastPage - 3) {
+      this.closestPages = [this.lastPage - 4, this.lastPage - 3, this.lastPage - 2, this.lastPage - 1, this.lastPage];
+    }
+    else {
+      this.closestPages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
+    }
   }
 
   public changeRouteMinus() {
@@ -51,9 +65,13 @@ export class OrderListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._pageSub = this._store.pipe(select(fromShared.getPage)).subscribe(page => this.currentPage = page);
-    this._loadingSub = this._store.pipe(select(fromShared.isLoading)).subscribe(isLoading => console.log(isLoading));
+    this._store.dispatch(new GetOrdersFromServerAction(this._currentRoute.snapshot.children[0].params['number']));
     this._totalPagesSub = this._store.pipe(select(fromShared.getTotalPages)).subscribe(totalPages => this.lastPage = totalPages);
+    this._pageSub = this._store.pipe(select(fromShared.getPage)).subscribe(page => {
+      this.setClosestPages(page = 1);
+      this.currentPage = page;
+    });
+    this._loadingSub = this._store.pipe(select(fromShared.isLoading)).subscribe(isLoading => console.log(isLoading));
   }
 
   ngOnDestroy() {

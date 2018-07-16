@@ -1,12 +1,23 @@
 <h1>Orders</h1>
-
-<table>
-  <td>
-    <router-outlet></router-outlet>
-    <button (click)="changeRouteMinus()">--</button>
-    <p>{{currentPage}}</p>
-    <button (click)="changeRoutePlus()">++</button>
-    <button (click)="changeRouteFirstPage()">1</button>
-    <button (click)="changeRouteLastPage()">{{lastPage}}</button>
-  </td>
-</table>
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="disabled">
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <ng-template *ngFor="let index of closestPages">
+      <li *ngClass="{'active': index === currentPage}">
+        <a href="#">{{index}}
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+    </ng-template>
+  </ul>
+</nav>
+<router-outlet></router-outlet>
+<button (click)="changeRouteMinus()">--</button>
+<p>{{currentPage}}</p>
+<button (click)="changeRoutePlus()">++</button>
+<button (click)="changeRouteFirstPage()">1</button>
+<button (click)="changeRouteLastPage()">{{lastPage}}</button>
