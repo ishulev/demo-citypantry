@@ -68,10 +68,11 @@ export class OrderListComponent implements OnInit, OnDestroy {
     this._store.dispatch(new GetOrdersFromServerAction(this._currentRoute.snapshot.children[0].params['number']));
     this._totalPagesSub = this._store.pipe(select(fromShared.getTotalPages)).subscribe(totalPages => this.lastPage = totalPages);
     this._pageSub = this._store.pipe(select(fromShared.getPage)).subscribe(page => {
-      this.setClosestPages(page = 1);
+      this.setClosestPages(page);
+      console.log(this.closestPages);
       this.currentPage = page;
     });
-    this._loadingSub = this._store.pipe(select(fromShared.isLoading)).subscribe(isLoading => console.log(isLoading));
+    // this._loadingSub = this._store.pipe(select(fromShared.isLoading)).subscribe(isLoading => console.log(isLoading));
   }
 
   ngOnDestroy() {
