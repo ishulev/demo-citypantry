@@ -6,13 +6,13 @@
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <ng-template *ngFor="let index of closestPages">
-      <li *ngClass="{'active': index === currentPage}">
+    <ng-container *ngFor="let index of closestPages">
+      <li [ngClass]="{'active': index === currentPage}">
         <a href="#">{{index}}
           <span class="sr-only">(current)</span>
         </a>
       </li>
-    </ng-template>
+    </ng-container>
   </ul>
 </nav>
 <router-outlet></router-outlet>
