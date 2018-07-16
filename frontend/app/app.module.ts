@@ -7,6 +7,7 @@ import {
 } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { reducers, metaReducers } from './shared/store/reducers';
 import { CustomRouterStateSerializer } from './shared/utils';
@@ -23,6 +24,7 @@ import { HomepageModule } from './homepage/homepage.module';
     HomepageModule,
     OrderListModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRouterModule,
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer

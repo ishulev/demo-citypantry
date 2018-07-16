@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
 import { Order } from './../../../store/models';
@@ -10,7 +10,6 @@ import * as fromShared from './../../../../shared/store/reducers';
   styleUrls: ['./page.component.scss']
 })
 export class PageComponent implements OnInit, OnDestroy {
-
   constructor(private _store: Store<fromShared.State>) {
   }
   private _dataSub: any;

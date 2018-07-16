@@ -87,3 +87,11 @@ export const getTotalPages = createSelector(
   getServerState,
   orders.getTotalPages
 );
+
+export const getRouterState = state => state.router;
+
+export const getRouterPath = createSelector(getRouterState, (router: fromRouter.RouterReducerState) => {
+  if (router) {
+    return router.state.url;
+  }
+})

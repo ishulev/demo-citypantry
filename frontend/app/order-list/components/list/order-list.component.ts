@@ -1,16 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
 import * as fromShared from './../../../shared/store/reducers';
+import { slideInDownAnimation } from '../../../app.animations';
 
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.scss']
+  styleUrls: ['./order-list.component.scss'],
+  animations: [ slideInDownAnimation ]
 })
 export class OrderListComponent implements OnInit, OnDestroy {
+  @HostBinding('@routeAnimation') routeAnimation = true;
+  @HostBinding('style.display')   display = 'block';
+  @HostBinding('style.position')  position = 'absolute';
   constructor(private _router: Router, private _store: Store<fromShared.State>) {
   }
 
