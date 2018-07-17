@@ -22,11 +22,15 @@ app.get('/', (req, res) => {
 app.get('/orders', (req, res) => {
   const page = req.query.page ? Math.max(1, req.query.page) : 1;
 
-  const items = orders.slice(100 * (page - 1), 100 * page);
+  // page size is set as a constant and the amount is reduced to 15 for better UX
+  const PAGE_SIZE = 15;
 
+  const items = orders.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page);
+
+  // There is a 2 second delay, to simulate network latency and server response
   setTimeout(() => res.send({
     page: page,
-    pageSize: 100,
+    pageSize: PAGE_SIZE,
     total: orders.length,
     count: items.length,
     items

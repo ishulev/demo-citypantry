@@ -1,11 +1,18 @@
 import { ResponseFromServer } from './index';
-export interface Order {
+export class Order {
   customer: string;
   vendor: string;
   commissionRate: number;
-  total: number;
   delayMinutes: number;
   deliveredAt: string;
+
+  constructor() {
+    this.customer = '';
+    this.vendor = '';
+    this.commissionRate = 0;
+    this.delayMinutes = 0;
+    this.deliveredAt = '';
+  }
 }
 
 export interface ResponseFromServer {

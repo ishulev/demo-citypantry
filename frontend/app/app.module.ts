@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import {
   StoreRouterConnectingModule,
-  RouterStateSerializer,
+  RouterStateSerializer
 } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { reducers, metaReducers } from './shared/store/reducers';
 import { CustomRouterStateSerializer } from './shared/utils';
@@ -16,13 +17,12 @@ import { OrderListModule } from './order-list/order-list.module';
 import { HomepageModule } from './homepage/homepage.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     HomepageModule,
     OrderListModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRouterModule,
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer
@@ -43,10 +43,10 @@ import { HomepageModule } from './homepage/homepage.module';
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
     StoreDevtoolsModule.instrument({
-      name: 'City Pantry Store DevTools',
+      name: 'City Pantry Store DevTools'
       // logOnly: environment.production,
     }),
-     /**
+    /**
      * @ngrx/router-store keeps router state up-to-date in the store.
      */
     StoreRouterConnectingModule.forRoot({
@@ -54,7 +54,7 @@ import { HomepageModule } from './homepage/homepage.module';
         They stateKey defines the name of the state used by the router-store reducer.
         This matches the key defined in the map of reducers
       */
-      stateKey: 'router',
+      stateKey: 'router'
     }),
     EffectsModule.forRoot([])
   ],
@@ -64,7 +64,7 @@ import { HomepageModule } from './homepage/homepage.module';
      * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
      * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
      */
-    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer }
   ],
   bootstrap: [AppComponent]
 })

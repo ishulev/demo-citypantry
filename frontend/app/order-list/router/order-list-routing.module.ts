@@ -12,9 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: 'page/:number',
-        resolve: {
-          PreloadResolver
-        },
+        // Sadly, can't use the resolver, because the parent component won't be rendered,
+        // until the resolver is resolved, regardless that it is for the child component...
+        // resolve: {
+        //   PreloadResolver
+        // },
         component: PageComponent
       },
       {
@@ -29,8 +31,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [
-    PreloadResolver
-  ]
+  providers: [PreloadResolver]
 })
-export class OrderListRoutingModule { }
+export class OrderListRoutingModule {}

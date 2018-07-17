@@ -10,14 +10,9 @@ describe('HomepageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        HomepageComponent
-      ]
-    })
-    .compileComponents();
+      imports: [RouterTestingModule],
+      declarations: [HomepageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -44,7 +39,9 @@ describe('HomepageComponent', () => {
   });
 
   it('should have a link to the order list page', () => {
-    const links = fixture.debugElement.query(By.css('ul')).queryAll(By.css('a'));
+    const links = fixture.debugElement
+      .query(By.css('ul'))
+      .queryAll(By.css('a'));
 
     expect(links[0].nativeElement.href).toMatch(/\/orders$/);
   });
