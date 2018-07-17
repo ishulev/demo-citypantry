@@ -5,10 +5,10 @@ import { slideInDownAnimation } from '../app.animations';
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
-  animations: [ slideInDownAnimation ]
+  animations: [slideInDownAnimation]
 })
 export class HomepageComponent {
   @HostBinding('@routeAnimation') routeAnimation = true;
-  @HostBinding('style.display')   display = 'block';
-  @HostBinding('style.position')  position = 'absolute';
+  @HostBinding('style.display') display = 'block';
+  @HostBinding('style.position') position = 'absolute';
 }

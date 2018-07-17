@@ -1,5 +1,9 @@
 import { ResponseFromServer, Order } from '../models';
-import { ServerResponseReceivedAction, GetOrdersFromServerAction, ServerActionsUnion } from '../actions';
+import {
+  ServerResponseReceivedAction,
+  GetOrdersFromServerAction,
+  ServerActionsUnion
+} from '../actions';
 
 export interface ResponseFromServerState extends ResponseFromServer {
   loading: boolean;
@@ -16,7 +20,10 @@ const initialState: ResponseFromServerState = {
 
 const demoOrder = new Order();
 
-export function reducer(state = initialState, action: ServerActionsUnion): ResponseFromServerState {
+export function reducer(
+  state = initialState,
+  action: ServerActionsUnion
+): ResponseFromServerState {
   switch (action.type) {
     case ServerResponseReceivedAction.TYPE: {
       const rawPayload = action.payload;
@@ -25,11 +32,11 @@ export function reducer(state = initialState, action: ServerActionsUnion): Respo
         ...rawPayload,
         items: rawPayload.items.map(item => {
           const newItem = {};
-          Object.keys(demoOrder).forEach(key => newItem[key] = item[key]);
+          Object.keys(demoOrder).forEach(key => (newItem[key] = item[key]));
           return newItem;
         })
       };
-      return Object.assign({}, {...state, loading: false}, filteredPayload);
+      return Object.assign({}, { ...state, loading: false }, filteredPayload);
     }
 
     case GetOrdersFromServerAction.TYPE: {
@@ -45,8 +52,8 @@ export function reducer(state = initialState, action: ServerActionsUnion): Respo
   }
 }
 
-
 export const getOrders = (state: ResponseFromServerState) => state.items;
 export const getLoading = (state: ResponseFromServerState) => state.loading;
 export const getCurrentPage = (state: ResponseFromServerState) => state.page;
-export const getTotalPages = (state: ResponseFromServerState) => Math.ceil(state.total / state.pageSize);
+export const getTotalPages = (state: ResponseFromServerState) =>
+  Math.ceil(state.total / state.pageSize);

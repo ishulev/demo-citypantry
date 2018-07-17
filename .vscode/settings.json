@@ -1,0 +1,32 @@
+{
+	"[html]": {
+		"editor.formatOnSave": true
+	},
+	"[javascript]": {
+		"editor.formatOnSave": true
+	},
+	"[typescript]": {
+		"editor.formatOnSave": true
+	},
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"editor.detectIndentation": false,
+	"editor.renderWhitespace": "boundary",
+	"editor.dragAndDrop": false
+}
+
+// {
+//   "editor.insertSpaces": false,
+//   "editor.tabSize": 4,
+//   "editor.detectIndentation": false,
+//   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+//   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+//   "files.exclude": {
+//     "**/.git": true,
+//     "**/.svn": true,
+//     "**/.hg": true,
+//     "**/.DS_Store": true
+//   },
+//   "files.insertFinalNewline": true,
+//   "typescript.tsdk": "node_modules\\typescript\\lib"
+// }

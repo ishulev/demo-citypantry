@@ -13,15 +13,11 @@ const appRoutes: Routes = [
   {
     path: '**',
     loadChildren: 'app/homepage/homepage.module#HomepageModule'
-  },
+  }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes),
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
 })
 export class AppRouterModule {}

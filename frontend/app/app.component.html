@@ -1,12 +1,12 @@
 <main class="container">
-    <a href="#">TEST</a>
-    <ul class="nav nav-tabs">
-        <li role="navigation" [ngClass]="{'active': routePath === '/'}">
-            <a [routerLink]="['/']">Home</a>
-        </li>
-        <li role="navigation" [ngClass]="{'active': routePath.includes('orders')}">
-            <a [routerLink]="['/orders']">Order List</a>
-        </li>
-    </ul>
-    <router-outlet></router-outlet>
+  <a href="#">TEST</a>
+  <ul class="nav nav-tabs">
+    <li role="navigation" [ngClass]="{'active': routePath === '/'}">
+      <a [routerLink]="['/']">Home</a>
+    </li>
+    <li role="navigation" [ngClass]="{'active': routePath.includes('orders')}">
+      <a [routerLink]="['/orders']">Order List</a>
+    </li>
+  </ul>
+  <router-outlet></router-outlet>
 </main>

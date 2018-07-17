@@ -3,7 +3,7 @@ import {
   createSelector,
   createFeatureSelector,
   ActionReducer,
-  MetaReducer,
+  MetaReducer
 } from '@ngrx/store';
 
 import { ResponseFromServerState } from './../../../order-list/store/reducers';
@@ -43,7 +43,7 @@ export interface State {
  */
 export const reducers: ActionReducerMap<State> = {
   server: orders.reducer,
-  router: fromRouter.routerReducer,
+  router: fromRouter.routerReducer
 };
 
 // console.log all actions
@@ -65,23 +65,15 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [storeFreeze]
   : [];
 
-
-export const getServerState = createFeatureSelector<ResponseFromServerState>('server');
-
-export const isLoading = createSelector(
-  getServerState,
-  orders.getLoading
+export const getServerState = createFeatureSelector<ResponseFromServerState>(
+  'server'
 );
 
-export const getOrders = createSelector(
-  getServerState,
-  orders.getOrders
-);
+export const isLoading = createSelector(getServerState, orders.getLoading);
 
-export const getPage = createSelector(
-  getServerState,
-  orders.getCurrentPage
-);
+export const getOrders = createSelector(getServerState, orders.getOrders);
+
+export const getPage = createSelector(getServerState, orders.getCurrentPage);
 
 export const getTotalPages = createSelector(
   getServerState,
@@ -90,8 +82,11 @@ export const getTotalPages = createSelector(
 
 export const getRouterState = state => state.router;
 
-export const getRouterPath = createSelector(getRouterState, (router: fromRouter.RouterReducerState) => {
-  if (router) {
-    return router.state.url;
+export const getRouterPath = createSelector(
+  getRouterState,
+  (router: fromRouter.RouterReducerState) => {
+    if (router) {
+      return router.state.url;
+    }
   }
-})
+);

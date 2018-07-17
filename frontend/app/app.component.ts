@@ -9,17 +9,18 @@ import * as fromShared from './shared/store/reducers';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  constructor(private _store: Store<fromShared.State>) {
-  }
+  constructor(private _store: Store<fromShared.State>) {}
   private _dataSub: any;
   public routePath: string = '';
 
   ngOnInit() {
-    this._dataSub = this._store.pipe(select(fromShared.getRouterPath)).subscribe(newPath => {
-      if(newPath) {
-        this.routePath = newPath;
-      }
-    });
+    this._dataSub = this._store
+      .pipe(select(fromShared.getRouterPath))
+      .subscribe(newPath => {
+        if (newPath) {
+          this.routePath = newPath;
+        }
+      });
   }
 
   ngOnDestroy() {

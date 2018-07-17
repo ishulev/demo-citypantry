@@ -9,16 +9,19 @@ import { Subject } from 'rxjs/Subject';
 
 import { take, takeUntil, switchMap } from 'rxjs/operators';
 
-import { GetOrdersFromServerAction, ServerResponseReceivedAction } from '../store/actions';
+import {
+  GetOrdersFromServerAction,
+  ServerResponseReceivedAction
+} from '../store/actions';
 import { ResponseFromServer } from '../store/models';
 
 @Injectable()
-export class PreloadResolver implements Resolve<Observable<Boolean>>, OnDestroy {
+export class PreloadResolver
+  implements Resolve<Observable<Boolean>>, OnDestroy {
   constructor(
     private _store: Store<ResponseFromServer>,
     private _actions: Actions
-  ) {
-  }
+  ) {}
 
   private _destroyed = new Subject<boolean>();
   private _routeParam = null;
@@ -31,7 +34,7 @@ export class PreloadResolver implements Resolve<Observable<Boolean>>, OnDestroy 
       ofType(ServerResponseReceivedAction.TYPE),
       take(1),
       takeUntil(this._destroyed),
-      switchMap(() => Observable.of(true)),
+      switchMap(() => Observable.of(true))
     );
   }
 

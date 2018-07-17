@@ -29,4 +29,4 @@ import { PageComponent } from './components/list/page/page.component';
     EffectsModule.forFeature([OrdersEffects])
   ]
 })
-export class OrderListModule { }
+export class OrderListModule {}

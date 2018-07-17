@@ -27,7 +27,7 @@ export class CustomRouterStateSerializer
 
     const {
       url,
-      root: { queryParams },
+      root: { queryParams }
     } = routerState;
     const { params } = route;
 
