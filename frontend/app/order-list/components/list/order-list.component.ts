@@ -73,6 +73,9 @@ export class OrderListComponent implements OnInit, OnDestroy {
   }
 
   public changeToPage(page) {
+    if (page === this.currentPage) {
+      return;
+    }
     this.navigateToPage(page);
   }
 
