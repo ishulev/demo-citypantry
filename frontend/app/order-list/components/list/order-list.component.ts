@@ -25,9 +25,12 @@ export class OrderListComponent implements OnInit, OnDestroy {
   private _pageSub: any;
   private _loadingSub: any;
   private _totalPagesSub: any;
+  private _isInitialSub: any;
   public currentPage: number;
   public lastPage: number;
   public closestPages: number[];
+  public isInitial = true;
+  public isLoading: boolean;
 
   private navigateToPage(nextPage) {
     this._router.navigate(['/orders/page', '' + nextPage]);
@@ -94,17 +97,20 @@ export class OrderListComponent implements OnInit, OnDestroy {
       .pipe(select(fromShared.getPage))
       .subscribe(page => {
         this.setClosestPages(page);
-        console.log(this.closestPages);
         this.currentPage = page;
       });
     this._loadingSub = this._store
       .pipe(select(fromShared.isLoading))
-      .subscribe(isLoading => console.log(isLoading));
+      .subscribe(isLoading => (this.isLoading = isLoading));
+    this._isInitialSub = this._store
+      .pipe(select(fromShared.isInitial))
+      .subscribe(isInitial => (this.isInitial = isInitial));
   }
 
   ngOnDestroy() {
     this._pageSub.unsubscribe();
     this._loadingSub.unsubscribe();
+    this._isInitialSub.unsubscribe();
     this._totalPagesSub.unsubscribe();
   }
 }

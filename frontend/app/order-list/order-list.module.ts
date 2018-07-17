@@ -8,12 +8,14 @@ import { OrdersEffects } from './store/effects/orders.effects';
 import { OrderListRoutingModule } from './router/order-list-routing.module';
 import { OrderListComponent } from './components/list/order-list.component';
 import { PageComponent } from './components/list/page/page.component';
+import { LoaderComponent } from './components/list/page/loader/loader.component';
 
 @NgModule({
   declarations: [
     OrderListComponent,
     PageComponent,
-    HrefPreventDefaultDirective
+    HrefPreventDefaultDirective,
+    LoaderComponent
   ],
   imports: [
     HttpClientModule,

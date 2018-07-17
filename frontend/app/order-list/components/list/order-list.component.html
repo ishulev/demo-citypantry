@@ -1,33 +1,33 @@
 <h1>Orders</h1>
-<nav aria-label="...">
+<router-outlet></router-outlet>
+<nav *ngIf="!isInitial" class="text-center">
   <ul class="pagination">
-    <li [ngClass]="{'disabled': currentPage === 1}">
+    <li [ngClass]="{'disabled': isLoading || currentPage === 1}">
       <a href="#" aria-label="First" (click)="changeRouteFirstPage()">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li [ngClass]="{'disabled': currentPage === 1}">
+    <li [ngClass]="{'disabled': isLoading || currentPage === 1}">
       <a href="#" aria-label="Previous" (click)="changeRouteMinus()">
         <span aria-hidden="true">&lsaquo;</span>
       </a>
     </li>
     <ng-container *ngFor="let index of closestPages">
-      <li [ngClass]="{'active': index === currentPage}">
+      <li [ngClass]="{'active': index === currentPage, 'disabled': isLoading}">
         <a href="#" (click)="changeToPage(index)">{{index}}
           <span class="sr-only">(current)</span>
         </a>
       </li>
     </ng-container>
-    <li [ngClass]="{'disabled': currentPage === lastPage}">
+    <li [ngClass]="{'disabled': isLoading || currentPage === lastPage}">
       <a href="#" aria-label="Next" (click)="changeRoutePlus()">
         <span aria-hidden="true">&rsaquo;</span>
       </a>
     </li>
-    <li [ngClass]="{'disabled': currentPage === lastPage}">
+    <li [ngClass]="{'disabled': isLoading || currentPage === lastPage}">
       <a href="#" aria-label="Last" (click)="changeRouteLastPage()">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
   </ul>
 </nav>
-<router-outlet></router-outlet>

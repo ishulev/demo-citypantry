@@ -7,6 +7,7 @@ import {
 
 export interface ResponseFromServerState extends ResponseFromServer {
   loading: boolean;
+  initialLoad: boolean;
 }
 
 const initialState: ResponseFromServerState = {
@@ -15,7 +16,8 @@ const initialState: ResponseFromServerState = {
   page: 1,
   pageSize: 0,
   total: 0,
-  loading: true
+  loading: true,
+  initialLoad: true
 };
 
 const demoOrder = new Order();
@@ -27,7 +29,6 @@ export function reducer(
   switch (action.type) {
     case ServerResponseReceivedAction.TYPE: {
       const rawPayload = action.payload;
-      const indexesNotInState = [];
       const filteredPayload = {
         ...rawPayload,
         items: rawPayload.items.map(item => {
@@ -36,7 +37,11 @@ export function reducer(
           return newItem;
         })
       };
-      return Object.assign({}, { ...state, loading: false }, filteredPayload);
+      return Object.assign(
+        {},
+        { ...state, loading: false, initialLoad: false },
+        filteredPayload
+      );
     }
 
     case GetOrdersFromServerAction.TYPE: {
@@ -55,5 +60,7 @@ export function reducer(
 export const getOrders = (state: ResponseFromServerState) => state.items;
 export const getLoading = (state: ResponseFromServerState) => state.loading;
 export const getCurrentPage = (state: ResponseFromServerState) => state.page;
+export const getIsInitial = (state: ResponseFromServerState) =>
+  state.initialLoad;
 export const getTotalPages = (state: ResponseFromServerState) =>
   Math.ceil(state.total / state.pageSize);
