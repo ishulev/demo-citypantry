@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 import * as fromShared from './shared/store/reducers';
 
@@ -10,11 +12,12 @@ import * as fromShared from './shared/store/reducers';
 })
 export class AppComponent implements OnInit, OnDestroy {
   constructor(private _store: Store<fromShared.State>) {}
-  private _dataSub: any;
-  public routePath: string = '';
+  private _destroyActions = new Subject<boolean>();
+  public routePath = '';
 
   ngOnInit() {
-    this._dataSub = this._store
+    this._store
+      .pipe(takeUntil(this._destroyActions))
       .pipe(select(fromShared.getRouterPath))
       .subscribe(newPath => {
         if (newPath) {
@@ -24,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._dataSub.unsubscribe();
+    this._destroyActions.next(true);
+    this._destroyActions.complete();
   }
 }

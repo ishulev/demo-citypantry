@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil, take } from 'rxjs/operators';
 
 import * as fromShared from './../../../shared/store/reducers';
 import { slideInDownAnimation } from '../../../app.animations';
@@ -22,10 +24,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
     private _currentRoute: ActivatedRoute
   ) {}
 
-  private _pageSub: any;
-  private _loadingSub: any;
-  private _totalPagesSub: any;
-  private _isInitialSub: any;
+  private _destroyActions = new Subject<boolean>();
   public currentPage: number;
   public lastPage: number;
   public closestPages: number[];
@@ -93,27 +92,29 @@ export class OrderListComponent implements OnInit, OnDestroy {
         this._currentRoute.snapshot.children[0].params['number']
       )
     );
-    this._totalPagesSub = this._store
+    this._store
+      .pipe(takeUntil(this._destroyActions))
       .pipe(select(fromShared.getTotalPages))
       .subscribe(totalPages => (this.lastPage = totalPages));
-    this._pageSub = this._store
+    this._store
+      .pipe(takeUntil(this._destroyActions))
       .pipe(select(fromShared.getPage))
       .subscribe(page => {
         this.setClosestPages(page);
         this.currentPage = page;
       });
-    this._loadingSub = this._store
+    this._store
+      .pipe(takeUntil(this._destroyActions))
       .pipe(select(fromShared.isLoading))
       .subscribe(isLoading => (this.isLoading = isLoading));
-    this._isInitialSub = this._store
+    this._store
+      .pipe(take(2))
       .pipe(select(fromShared.isInitial))
       .subscribe(isInitial => (this.isInitial = isInitial));
   }
 
   ngOnDestroy() {
-    this._pageSub.unsubscribe();
-    this._loadingSub.unsubscribe();
-    this._isInitialSub.unsubscribe();
-    this._totalPagesSub.unsubscribe();
+    this._destroyActions.next(true);
+    this._destroyActions.complete();
   }
 }
