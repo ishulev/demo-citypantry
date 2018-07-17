@@ -1,9 +1,14 @@
 <h1>Orders</h1>
 <nav aria-label="...">
   <ul class="pagination">
-    <li class="disabled">
-      <a href="#" aria-label="Previous">
+    <li [ngClass]="{'disabled': currentPage === 1}">
+      <a href="#" aria-label="First" (click)="changeRouteFirstPage()">
         <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li [ngClass]="{'disabled': currentPage === 1}">
+      <a href="#" aria-label="Previous" (click)="changeRouteMinus()">
+        <span aria-hidden="true">&lsaquo;</span>
       </a>
     </li>
     <ng-container *ngFor="let index of closestPages">
@@ -13,6 +18,16 @@
         </a>
       </li>
     </ng-container>
+    <li [ngClass]="{'disabled': currentPage === lastPage}">
+      <a href="#" aria-label="Next" (click)="changeRoutePlus()">
+        <span aria-hidden="true">&rsaquo;</span>
+      </a>
+    </li>
+    <li [ngClass]="{'disabled': currentPage === lastPage}">
+      <a href="#" aria-label="Last" (click)="changeRouteLastPage()">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
   </ul>
 </nav>
 <router-outlet></router-outlet>

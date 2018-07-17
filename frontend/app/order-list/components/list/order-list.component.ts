@@ -72,7 +72,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
       console.log(this.closestPages);
       this.currentPage = page;
     });
-    // this._loadingSub = this._store.pipe(select(fromShared.isLoading)).subscribe(isLoading => console.log(isLoading));
+    this._loadingSub = this._store.pipe(select(fromShared.isLoading)).subscribe(isLoading => console.log(isLoading));
   }
 
   ngOnDestroy() {
