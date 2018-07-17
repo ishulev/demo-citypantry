@@ -13,7 +13,7 @@
     </li>
     <ng-container *ngFor="let index of closestPages">
       <li [ngClass]="{'active': index === currentPage}">
-        <a href="#">{{index}}
+        <a href="#" (click)="changeToPage(index)">{{index}}
           <span class="sr-only">(current)</span>
         </a>
       </li>
