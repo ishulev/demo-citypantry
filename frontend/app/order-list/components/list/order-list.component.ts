@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil, take, filter } from 'rxjs/operators';
 
 import * as fromShared from '../../../shared/store/reducers/shared.reducer';
 import { slideInDownAnimation } from '../../../app.animations';
@@ -115,8 +115,9 @@ export class OrderListComponent implements OnInit, OnDestroy {
       .subscribe(isLoading => (this.isLoading = isLoading));
     this._store
       .pipe(
-        take(2),
-        select(fromShared.isInitial)
+        select(fromShared.isInitial),
+        filter(isInitial => !isInitial),
+        take(1)
       )
       .subscribe(isInitial => (this.isInitial = isInitial));
   }
