@@ -42,7 +42,7 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-  server: orders.reducer,
+  server: orders.ordersReducer,
   router: fromRouter.routerReducer
 };
 

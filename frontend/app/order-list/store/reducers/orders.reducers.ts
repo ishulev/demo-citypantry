@@ -22,7 +22,7 @@ const initialState: ResponseFromServerState = {
 
 const demoOrder = new Order();
 
-export function reducer(
+export function ordersReducer(
   state = initialState,
   action: ServerActionsUnion
 ): ResponseFromServerState {
