@@ -5,11 +5,11 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 
-import { ResponseFromServer } from '../models';
+import { ResponseFromServer } from '../models/orders';
 import {
   GetOrdersFromServerAction,
   ServerResponseReceivedAction
-} from '../actions';
+} from '../actions/orders.actions';
 
 @Injectable()
 export class OrdersEffects {

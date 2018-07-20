@@ -1,4 +1,3 @@
-import { ResponseFromServer } from './index';
 export class Order {
   customer: string;
   vendor: string;

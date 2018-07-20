@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
-import { ResponseFromServer } from '../models';
-import { Order } from '../models';
+import { ResponseFromServer } from '../models/orders';
+import { Order } from '../models/orders';
 
 export class OrdersReceivedAction implements Action {
   public static readonly TYPE = 'ORDERS_LOADED';

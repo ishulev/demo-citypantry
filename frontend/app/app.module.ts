@@ -9,7 +9,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { reducers, metaReducers } from './shared/store/reducers';
+import { reducers, metaReducers } from './shared/store/reducers/shared.reducer';
 import { CustomRouterStateSerializer } from './shared/utils';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.router';

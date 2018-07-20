@@ -3,8 +3,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderComponent } from './loader/loader.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import * as fromShared from './../../../../shared/store/reducers';
-import { reducer, ResponseFromServerState } from '../../../store/reducers';
+import * as fromShared from '../../../../shared/store/reducers/shared.reducer';
+import {
+  reducer,
+  ResponseFromServerState
+} from '../../../store/reducers/orders.reducers';
 import { PageComponent } from './page.component';
 
 describe('PageComponent', () => {

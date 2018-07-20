@@ -3,8 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 
-import { Order } from './../../../store/models';
-import * as fromShared from './../../../../shared/store/reducers';
+import { Order } from '../../../store/models/orders';
+import * as fromShared from '../../../../shared/store/reducers/shared.reducer';
 
 @Component({
   selector: 'app-page',

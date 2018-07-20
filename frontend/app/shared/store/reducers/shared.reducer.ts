@@ -6,7 +6,7 @@ import {
   MetaReducer
 } from '@ngrx/store';
 
-import { ResponseFromServerState } from './../../../order-list/store/reducers';
+import { ResponseFromServerState } from '../../../order-list/store/reducers/orders.reducers';
 import { environment } from '../../../../environments/environment';
 import { RouterStateUrl } from '../../utils';
 import * as fromRouter from '@ngrx/router-store';
@@ -25,7 +25,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
  * notation packages up all of the exports into a single object.
  */
 
-import * as orders from '../../../order-list/store/reducers';
+import * as orders from '../../../order-list/store/reducers/orders.reducers';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -80,15 +80,4 @@ export const isInitial = createSelector(getServerState, orders.getIsInitial);
 export const getTotalPages = createSelector(
   getServerState,
   orders.getTotalPages
-);
-
-export const getRouterState = state => state.router;
-
-export const getRouterPath = createSelector(
-  getRouterState,
-  (router: fromRouter.RouterReducerState) => {
-    if (router) {
-      return router.state.url;
-    }
-  }
 );

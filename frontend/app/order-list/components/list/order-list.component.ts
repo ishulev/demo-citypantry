@@ -4,9 +4,9 @@ import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil, take } from 'rxjs/operators';
 
-import * as fromShared from './../../../shared/store/reducers';
+import * as fromShared from '../../../shared/store/reducers/shared.reducer';
 import { slideInDownAnimation } from '../../../app.animations';
-import { GetOrdersFromServerAction } from '../../store/actions';
+import { GetOrdersFromServerAction } from '../../store/actions/orders.actions';
 
 @Component({
   selector: 'app-order-list',

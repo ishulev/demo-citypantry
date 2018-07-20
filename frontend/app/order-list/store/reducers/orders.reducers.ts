@@ -1,9 +1,9 @@
-import { ResponseFromServer, Order } from '../models';
+import { ResponseFromServer, Order } from '../models/orders';
 import {
   ServerResponseReceivedAction,
   GetOrdersFromServerAction,
   ServerActionsUnion
-} from '../actions';
+} from '../actions/orders.actions';
 
 export interface ResponseFromServerState extends ResponseFromServer {
   loading: boolean;
