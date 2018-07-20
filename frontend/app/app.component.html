@@ -1,9 +1,10 @@
 <main class="container">
   <ul class="nav nav-tabs">
-    <li role="navigation" [ngClass]="{'active': routePath === '/'}">
+    <li role="navigation" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+      true}">
       <a [routerLink]="['/']">Home</a>
     </li>
-    <li role="navigation" [ngClass]="{'active': routePath.includes('orders')}">
+    <li role="navigation" routerLinkActive="active">
       <a [routerLink]="['/orders']">Order List</a>
     </li>
   </ul>
