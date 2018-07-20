@@ -5,11 +5,12 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 
-import { ResponseFromServer } from '../models';
+import { ServerResponseFailedAction } from './../actions/orders.actions';
+import { ResponseFromServer } from '../models/orders';
 import {
   GetOrdersFromServerAction,
   ServerResponseReceivedAction
-} from '../actions';
+} from '../actions/orders.actions';
 
 @Injectable()
 export class OrdersEffects {
@@ -25,7 +26,7 @@ export class OrdersEffects {
             data => new ServerResponseReceivedAction(data as ResponseFromServer)
           ),
           // If request fails, dispatch failed action
-          catchError(() => Observable.of({ type: 'ORDERS_LOAD_FAIL' }))
+          catchError(() => Observable.of(new ServerResponseFailedAction()))
         )
     )
   );

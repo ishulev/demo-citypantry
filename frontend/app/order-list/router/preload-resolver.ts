@@ -12,8 +12,8 @@ import { take, takeUntil, switchMap } from 'rxjs/operators';
 import {
   GetOrdersFromServerAction,
   ServerResponseReceivedAction
-} from '../store/actions';
-import { ResponseFromServer } from '../store/models';
+} from '../store/actions/orders.actions';
+import { ResponseFromServer } from '../store/models/orders';
 
 @Injectable()
 export class PreloadResolver

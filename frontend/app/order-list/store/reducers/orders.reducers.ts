@@ -1,9 +1,9 @@
-import { ResponseFromServer, Order } from '../models';
+import { ResponseFromServer, Order } from '../models/orders';
 import {
   ServerResponseReceivedAction,
   GetOrdersFromServerAction,
   ServerActionsUnion
-} from '../actions';
+} from '../actions/orders.actions';
 
 export interface ResponseFromServerState extends ResponseFromServer {
   loading: boolean;
@@ -22,7 +22,7 @@ const initialState: ResponseFromServerState = {
 
 const demoOrder = new Order();
 
-export function reducer(
+export function ordersReducer(
   state = initialState,
   action: ServerActionsUnion
 ): ResponseFromServerState {
@@ -31,6 +31,8 @@ export function reducer(
       const rawPayload = action.payload;
       const filteredPayload = {
         ...rawPayload,
+        // using only properties, which are defined in the Order constructor
+        // this way I am not putting unused data in the store
         items: rawPayload.items.map(item => {
           const newItem = {};
           Object.keys(demoOrder).forEach(key => (newItem[key] = item[key]));

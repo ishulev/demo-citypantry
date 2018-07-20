@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import {
   StoreRouterConnectingModule,
@@ -9,15 +9,17 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { reducers, metaReducers } from './shared/store/reducers';
+import { CustomErrorHandler } from './shared/services/error-handler';
+import { reducers, metaReducers } from './shared/store/reducers/shared.reducer';
 import { CustomRouterStateSerializer } from './shared/utils';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.router';
 import { OrderListModule } from './order-list/order-list.module';
 import { HomepageModule } from './homepage/homepage.module';
+import { ErrorModalComponent } from './shared/components/error-modal/error-modal.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ErrorModalComponent],
   imports: [
     HomepageModule,
     OrderListModule,
@@ -64,7 +66,11 @@ import { HomepageModule } from './homepage/homepage.module';
      * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
      * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
      */
-    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer }
+    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+    {
+      provide: ErrorHandler,
+      useClass: CustomErrorHandler
+    }
   ],
   bootstrap: [AppComponent]
 })

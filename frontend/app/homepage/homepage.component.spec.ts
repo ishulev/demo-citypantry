@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomepageComponent } from './homepage.component';
@@ -10,7 +11,7 @@ describe('HomepageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, BrowserAnimationsModule],
       declarations: [HomepageComponent]
     }).compileComponents();
   }));
@@ -30,19 +31,5 @@ describe('HomepageComponent', () => {
 
     expect(title).toBeTruthy();
     expect(title.nativeElement.innerText).toContain('City Pantry');
-  });
-
-  it('should have a list of links', () => {
-    const links = fixture.debugElement.query(By.css('ul'));
-
-    expect(links).toBeTruthy();
-  });
-
-  it('should have a link to the order list page', () => {
-    const links = fixture.debugElement
-      .query(By.css('ul'))
-      .queryAll(By.css('a'));
-
-    expect(links[0].nativeElement.href).toMatch(/\/orders$/);
   });
 });

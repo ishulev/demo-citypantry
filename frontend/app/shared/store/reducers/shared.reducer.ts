@@ -6,7 +6,7 @@ import {
   MetaReducer
 } from '@ngrx/store';
 
-import { ResponseFromServerState } from './../../../order-list/store/reducers';
+import { ResponseFromServerState } from '../../../order-list/store/reducers/orders.reducers';
 import { environment } from '../../../../environments/environment';
 import { RouterStateUrl } from '../../utils';
 import * as fromRouter from '@ngrx/router-store';
@@ -25,7 +25,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
  * notation packages up all of the exports into a single object.
  */
 
-import * as orders from '../../../order-list/store/reducers';
+import * as orders from '../../../order-list/store/reducers/orders.reducers';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -42,7 +42,7 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-  server: orders.reducer,
+  server: orders.ordersReducer,
   router: fromRouter.routerReducer
 };
 
@@ -69,6 +69,9 @@ export const getServerState = createFeatureSelector<ResponseFromServerState>(
   'server'
 );
 
+// Define functions for caching parts of state
+// As per documentation, developers should use these functions,
+// instead of searching in the store, directly
 export const isLoading = createSelector(getServerState, orders.getLoading);
 
 export const getOrders = createSelector(getServerState, orders.getOrders);
@@ -80,15 +83,4 @@ export const isInitial = createSelector(getServerState, orders.getIsInitial);
 export const getTotalPages = createSelector(
   getServerState,
   orders.getTotalPages
-);
-
-export const getRouterState = state => state.router;
-
-export const getRouterPath = createSelector(
-  getRouterState,
-  (router: fromRouter.RouterReducerState) => {
-    if (router) {
-      return router.state.url;
-    }
-  }
 );

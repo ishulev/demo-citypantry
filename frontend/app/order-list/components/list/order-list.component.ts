@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil, take, filter } from 'rxjs/operators';
 
-import * as fromShared from './../../../shared/store/reducers';
+import * as fromShared from '../../../shared/store/reducers/shared.reducer';
 import { slideInDownAnimation } from '../../../app.animations';
-import { GetOrdersFromServerAction } from '../../store/actions';
+import { GetOrdersFromServerAction } from '../../store/actions/orders.actions';
 
 @Component({
   selector: 'app-order-list',
@@ -35,6 +35,9 @@ export class OrderListComponent implements OnInit, OnDestroy {
     this._router.navigate(['/orders/page', '' + nextPage]);
     this._store.dispatch(new GetOrdersFromServerAction(nextPage));
   }
+
+  // Logic for the pagination numbers
+  // Should be in a separate component
   private setClosestPages(currentPage) {
     if (currentPage < 4) {
       this.closestPages = [1, 2, 3, 4, 5];
@@ -57,6 +60,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Navigation functions for the pagination
   public changeRouteMinus() {
     if (this.currentPage === 1) {
       return;
@@ -93,23 +97,33 @@ export class OrderListComponent implements OnInit, OnDestroy {
       )
     );
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.getTotalPages))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.getTotalPages)
+      )
       .subscribe(totalPages => (this.lastPage = totalPages));
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.getPage))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.getPage)
+      )
       .subscribe(page => {
         this.setClosestPages(page);
         this.currentPage = page;
       });
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.isLoading))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.isLoading)
+      )
       .subscribe(isLoading => (this.isLoading = isLoading));
     this._store
-      .pipe(take(2))
-      .pipe(select(fromShared.isInitial))
+      .pipe(
+        // The initialLoad is for showing any elements on the orders page
+        select(fromShared.isInitial),
+        filter(isInitial => !isInitial),
+        take(1)
+      )
       .subscribe(isInitial => (this.isInitial = isInitial));
   }
 

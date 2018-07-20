@@ -3,8 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 
-import { Order } from './../../../store/models';
-import * as fromShared from './../../../../shared/store/reducers';
+import { Order } from '../../../store/models/orders';
+import * as fromShared from '../../../../shared/store/reducers/shared.reducer';
 
 @Component({
   selector: 'app-page',
@@ -20,17 +20,22 @@ export class PageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.getOrders))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.getOrders)
+      )
       .subscribe(orders => {
         this.orders = orders;
         if (orders[0]) {
+          // Using this to set table header items
           this.indexes = Object.keys(orders[0]);
         }
       });
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.isLoading))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.isLoading)
+      )
       .subscribe(isLoading => {
         this.isLoading = isLoading;
       });

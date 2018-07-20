@@ -21,13 +21,6 @@ import { LoaderComponent } from './components/list/page/loader/loader.component'
     HttpClientModule,
     CommonModule,
     OrderListRoutingModule,
-    /**
-     * EffectsModule.forRoot() is imported once in the root module and
-     * sets up the effects class to be initialized immediately when the
-     * application starts.
-     *
-     * See: https://github.com/ngrx/platform/blob/master/docs/effects/api.md#forroot
-     */
     EffectsModule.forFeature([OrdersEffects])
   ]
 })

@@ -1,33 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
-import { takeUntil } from 'rxjs/operators';
+import { Actions } from '@ngrx/effects';
+import { Component } from '@angular/core';
 
-import * as fromShared from './shared/store/reducers';
+import { SystemErrorAction } from './shared/store/actions/shared.actions';
+import { ServerResponseFailedAction } from './order-list/store/actions/orders.actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  constructor(private _store: Store<fromShared.State>) {}
-  private _destroyActions = new Subject<boolean>();
-  public routePath = '';
-
-  ngOnInit() {
-    this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.getRouterPath))
-      .subscribe(newPath => {
-        if (newPath) {
-          this.routePath = newPath;
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    this._destroyActions.next(true);
-    this._destroyActions.complete();
+export class AppComponent {
+  public errorOccured: boolean;
+  public errorContent: string;
+  constructor(private _actions: Actions) {
+    // Listen for errors and display error modal
+    // Currently, the error modal is not really doing anything
+    // just for display purposes
+    this._actions.ofType(SystemErrorAction.TYPE).subscribe(() => {
+      this.errorOccured = true;
+      this.errorContent = 'System Error!';
+    });
+    this._actions.ofType(ServerResponseFailedAction.TYPE).subscribe(() => {
+      this.errorOccured = true;
+      this.errorContent = 'Network Error!';
+    });
   }
 }

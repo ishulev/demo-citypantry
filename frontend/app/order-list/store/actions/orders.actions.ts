@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
-import { ResponseFromServer } from '../models';
-import { Order } from '../models';
+import { ResponseFromServer } from '../models/orders';
+import { Order } from '../models/orders';
 
 export class OrdersReceivedAction implements Action {
   public static readonly TYPE = 'ORDERS_LOADED';
@@ -22,6 +22,11 @@ export class ServerResponseReceivedAction implements Action {
   public readonly type = ServerResponseReceivedAction.TYPE;
 
   constructor(public readonly payload: ResponseFromServer) {}
+}
+
+export class ServerResponseFailedAction implements Action {
+  public static readonly TYPE = 'LOAD_ERROR';
+  public readonly type = ServerResponseFailedAction.TYPE;
 }
 
 /**
