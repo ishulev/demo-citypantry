@@ -8,6 +8,7 @@ import { slideInDownAnimation } from '../app.animations';
   animations: [slideInDownAnimation]
 })
 export class HomepageComponent {
+  // Add animations for the home component
   @HostBinding('@routeAnimation') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
   @HostBinding('style.position') position = 'absolute';

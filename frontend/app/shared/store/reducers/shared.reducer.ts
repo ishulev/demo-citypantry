@@ -69,6 +69,9 @@ export const getServerState = createFeatureSelector<ResponseFromServerState>(
   'server'
 );
 
+// Define functions for caching parts of state
+// As per documentation, developers should use these functions,
+// instead of searching in the store, directly
 export const isLoading = createSelector(getServerState, orders.getLoading);
 
 export const getOrders = createSelector(getServerState, orders.getOrders);

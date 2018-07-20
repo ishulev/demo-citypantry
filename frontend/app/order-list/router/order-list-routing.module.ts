@@ -14,6 +14,7 @@ const routes: Routes = [
         path: 'page/:number',
         // Sadly, can't use the resolver, because the parent component won't be rendered,
         // until the resolver is resolved, regardless that it is for the child component...
+        // this is messing up my loader strategy
         // resolve: {
         //   PreloadResolver
         // },

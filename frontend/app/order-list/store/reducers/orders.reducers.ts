@@ -31,6 +31,8 @@ export function ordersReducer(
       const rawPayload = action.payload;
       const filteredPayload = {
         ...rawPayload,
+        // using only properties, which are defined in the Order constructor
+        // this way I am not putting unused data in the store
         items: rawPayload.items.map(item => {
           const newItem = {};
           Object.keys(demoOrder).forEach(key => (newItem[key] = item[key]));

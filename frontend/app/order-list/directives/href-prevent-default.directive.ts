@@ -1,5 +1,5 @@
 import { Directive, Input, HostListener } from '@angular/core';
-
+// The idea for this directive is to prevent default for all anchor elements
 @Directive({
   // tslint:disable-next-line
   selector: '[href]'

@@ -13,6 +13,9 @@ export class AppComponent {
   public errorOccured: boolean;
   public errorContent: string;
   constructor(private _actions: Actions) {
+    // Listen for errors and display error modal
+    // Currently, the error modal is not really doing anything
+    // just for display purposes
     this._actions.ofType(SystemErrorAction.TYPE).subscribe(() => {
       this.errorOccured = true;
       this.errorContent = 'System Error!';

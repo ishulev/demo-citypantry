@@ -27,6 +27,7 @@ export class PageComponent implements OnInit, OnDestroy {
       .subscribe(orders => {
         this.orders = orders;
         if (orders[0]) {
+          // Using this to set table header items
           this.indexes = Object.keys(orders[0]);
         }
       });

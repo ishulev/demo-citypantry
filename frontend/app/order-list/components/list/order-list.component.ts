@@ -35,6 +35,9 @@ export class OrderListComponent implements OnInit, OnDestroy {
     this._router.navigate(['/orders/page', '' + nextPage]);
     this._store.dispatch(new GetOrdersFromServerAction(nextPage));
   }
+
+  // Logic for the pagination numbers
+  // Should be in a separate component
   private setClosestPages(currentPage) {
     if (currentPage < 4) {
       this.closestPages = [1, 2, 3, 4, 5];
@@ -57,6 +60,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Navigation functions for the pagination
   public changeRouteMinus() {
     if (this.currentPage === 1) {
       return;
@@ -115,6 +119,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
       .subscribe(isLoading => (this.isLoading = isLoading));
     this._store
       .pipe(
+        // The initialLoad is for showing any elements on the orders page
         select(fromShared.isInitial),
         filter(isInitial => !isInitial),
         take(1)
