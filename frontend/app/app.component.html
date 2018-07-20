@@ -9,4 +9,5 @@
     </li>
   </ul>
   <router-outlet></router-outlet>
+  <app-error-modal *ngIf="errorOccured" [message]="errorContent"></app-error-modal>
 </main>

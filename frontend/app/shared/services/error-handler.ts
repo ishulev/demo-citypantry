@@ -1,8 +1,8 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { State } from './../store/reducers/shared.reducer';
-import { SystemErrorAction } from './../store/actions/shared.actions';
+import { State } from '../store/reducers/shared.reducer';
+import { SystemErrorAction } from '../store/actions/shared.actions';
 
 @Injectable()
 export class CustomErrorHandler implements ErrorHandler {

@@ -24,6 +24,11 @@ export class ServerResponseReceivedAction implements Action {
   constructor(public readonly payload: ResponseFromServer) {}
 }
 
+export class ServerResponseFailedAction implements Action {
+  public static readonly TYPE = 'LOAD_ERROR';
+  public readonly type = ServerResponseFailedAction.TYPE;
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
