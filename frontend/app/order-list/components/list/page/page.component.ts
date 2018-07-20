@@ -20,8 +20,10 @@ export class PageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.getOrders))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.getOrders)
+      )
       .subscribe(orders => {
         this.orders = orders;
         if (orders[0]) {
@@ -29,8 +31,10 @@ export class PageComponent implements OnInit, OnDestroy {
         }
       });
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.isLoading))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.isLoading)
+      )
       .subscribe(isLoading => {
         this.isLoading = isLoading;
       });

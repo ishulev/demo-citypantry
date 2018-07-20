@@ -93,23 +93,31 @@ export class OrderListComponent implements OnInit, OnDestroy {
       )
     );
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.getTotalPages))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.getTotalPages)
+      )
       .subscribe(totalPages => (this.lastPage = totalPages));
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.getPage))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.getPage)
+      )
       .subscribe(page => {
         this.setClosestPages(page);
         this.currentPage = page;
       });
     this._store
-      .pipe(takeUntil(this._destroyActions))
-      .pipe(select(fromShared.isLoading))
+      .pipe(
+        takeUntil(this._destroyActions),
+        select(fromShared.isLoading)
+      )
       .subscribe(isLoading => (this.isLoading = isLoading));
     this._store
-      .pipe(take(2))
-      .pipe(select(fromShared.isInitial))
+      .pipe(
+        take(2),
+        select(fromShared.isInitial)
+      )
       .subscribe(isInitial => (this.isInitial = isInitial));
   }
 
